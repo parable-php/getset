@@ -2,7 +2,7 @@
   "name": "parable-php/getset",
   "type": "library",
   "description": "Parable GetSet helps with easily building value sets",
-  "keywords": ["library", "micro", "values","parable"],
+  "keywords": ["library", "micro", "values", "parable"],
   "homepage": "https://github.com/parable-php/getset",
   "license": "MIT",
   "authors": [
