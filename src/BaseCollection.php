@@ -32,7 +32,7 @@ abstract class BaseCollection
         return $data;
     }
 
-    public function get($key)
+    public function get(string $key, $default = null)
     {
         $keys = explode('.', $key);
 
@@ -40,7 +40,7 @@ abstract class BaseCollection
 
         foreach ($keys as $key) {
             if (!isset($resource[$key])) {
-                return null;
+                return $default;
             }
             $resource = &$resource[$key];
         }
@@ -48,7 +48,7 @@ abstract class BaseCollection
         return $resource;
     }
 
-    public function getAndRemove($key)
+    public function getAndRemove(string $key)
     {
         $data = $this->get($key);
         $this->remove($key);
@@ -100,13 +100,6 @@ abstract class BaseCollection
 
     public function remove(string $key): void
     {
-        if (!$this->has($key)) {
-            throw new Exception(sprintf(
-                "Cannot remove non-existing value by key '%s'",
-                $key
-            ));
-        }
-
         $keys = explode('.', $key);
 
         $data = $this->getAll();
@@ -115,7 +108,10 @@ abstract class BaseCollection
 
         foreach ($keys as $index => $key) {
             if (!isset($resource[$key])) {
-                return;
+                throw new Exception(sprintf(
+                    "Cannot remove non-existing value by key '%s'",
+                    $key
+                ));
             }
             if ($index < (count($keys) - 1)) {
                 $resource = &$resource[$key];
@@ -148,8 +144,14 @@ abstract class BaseCollection
         return true;
     }
 
-    public function count(): int
+    public function count(string $key = null): int
     {
-        return count($this->getAll());
+        if ($key === null) {
+            $data = $this->getAll();
+        } else {
+            $data = $this->get($key, []);
+        }
+
+        return count($data);
     }
 }

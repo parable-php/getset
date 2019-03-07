@@ -313,9 +313,39 @@ class GetSetTest extends \PHPUnit\Framework\TestCase
         self::assertTrue(is_array($this->getSet->get('one')));
     }
 
-    public function testGetNonExistingKeyReturnsNull()
+    public function testCountWithKey()
+    {
+        $this->getSet->set('one.two.three', 'totally');
+        $this->getSet->set('one.two.four', 'also');
+
+        // count only counts the top level, which is 1: ['one']
+        self::assertSame(1, $this->getSet->count());
+        // this level is 1: ['two']
+        self::assertSame(1, $this->getSet->count('one'));
+        // but 'two' contains both 'three' and 'four'
+        self::assertSame(2, $this->getSet->count('one.two'));
+    }
+
+    public function testHas()
+    {
+        $this->getSet->set('one.two.three', 'totally');
+
+        self::assertTrue($this->getSet->has('one'));
+        self::assertTrue($this->getSet->has('one.two'));
+        self::assertTrue($this->getSet->has('one.two.three'));
+
+        self::assertFalse($this->getSet->has('one.two.three.totally'));
+        self::assertFalse($this->getSet->has('random'));
+    }
+
+    public function testGetNonExistingKeyReturnsNullByDefault()
     {
         self::assertNull($this->getSet->get('nope'));
+    }
+
+    public function testGetNonExistingKeyReturnsDefaultIfPassed()
+    {
+        self::assertSame('default', $this->getSet->get('nope', 'default'));
     }
 
     public function testGlobalValuesAreSetGlobally()
