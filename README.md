@@ -71,8 +71,8 @@ dot-notation get/set logic.
 
 - `getAll(): array` - returns all values currently stored
 - `getAllAndClear(): array` - returns all values currently stored and then clears them
-- `get(string $key, $default = null): mixed` - returns value by key or `null` if not found
-- `getAndRemove(string $key, $default = null): mixed` - returns value by key and then removes it, or `null` if not found
+- `get(string $key, $default = null): mixed` - returns value by key or `$default` if not found
+- `getAndRemove(string $key): mixed` - returns value by key and then removes it, or throw exception if it doesn't exist
 - `set(string $key, $value): void` - set a value by key
 - `setMany(array $values): void` - set all values passed one-by-one, overwriting pre-existing values
 - `setAll(array $values): void` - set all values, overwriting any pre-existing ones
