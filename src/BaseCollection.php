@@ -13,7 +13,9 @@ abstract class BaseCollection
     {
         if ($this instanceof LocalResourceInterface) {
             return $this->localValues;
-        } elseif ($this instanceof GlobalResourceInterface) {
+        }
+
+        if ($this instanceof GlobalResourceInterface) {
             if (!isset($GLOBALS[$this->getResource()])) {
                 $GLOBALS[$this->getResource()] = [];
             }
