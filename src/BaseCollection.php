@@ -50,9 +50,14 @@ abstract class BaseCollection
         return $resource;
     }
 
-    public function getAndRemove(string $key)
+    public function getAndRemove(string $key, $default = null)
     {
+        if (!$this->has($key)) {
+            return $default;
+        }
+
         $data = $this->get($key);
+
         $this->remove($key);
 
         return $data;

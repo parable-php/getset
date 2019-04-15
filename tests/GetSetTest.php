@@ -143,17 +143,11 @@ class GetSetTest extends \PHPUnit\Framework\TestCase
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("Cannot remove non-existing value by key 'stuff'");
 
-        $this->getSet->setMany([
-            'key1' => 'yo1',
-            'key2' => 'yo2',
-            'key3' => 'yo3',
-        ]);
-
-        self::assertSame(3, $this->getSet->count());
-
         $this->getSet->remove('stuff');
-
-        self::assertSame(3, $this->getSet->count());
+    }
+    public function testGetAndRemoveNonExistingKeyDoesNotThrow()
+    {
+        self::assertNull($this->getSet->getAndRemove('stuff'));
     }
 
     public function testSetGetSpecificAndGetAll()
@@ -346,6 +340,16 @@ class GetSetTest extends \PHPUnit\Framework\TestCase
     public function testGetNonExistingKeyReturnsDefaultIfPassed()
     {
         self::assertSame('default', $this->getSet->get('nope', 'default'));
+    }
+
+    public function testGetAndRemoveNonExistingKeyReturnsNullByDefault()
+    {
+        self::assertNull($this->getSet->getAndRemove('nope'));
+    }
+
+    public function testGetAndRemoveNonExistingKeyReturnsDefaultIfPassed()
+    {
+        self::assertSame('default', $this->getSet->getAndRemove('nope', 'default'));
     }
 
     public function testGlobalValuesAreSetGlobally()

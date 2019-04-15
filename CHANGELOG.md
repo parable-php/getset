@@ -1,5 +1,10 @@
 # Parable GetSet
 
+## 0.1.2
+
+_Changes_
+- `get()` returns `null` or a custom default value when a key doesn't exist. `remove()` throws an exception. `getAndRemove()` also threw an exception, but the primary goal is to get the value. This behavior has been flipped. Now `getAndRemove()` will return `null`/default if the key doesn't exist and not throw anymore.
+
 ## 0.1.1
 
 _Changes_
