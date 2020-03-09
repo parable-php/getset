@@ -4,10 +4,11 @@ namespace Parable\GetSet\Tests;
 
 use Parable\GetSet\InputStreamCollection;
 use Parable\GetSet\Exception;
+use PHPUnit\Framework\TestCase;
 
-class InputStreamTest extends \PHPUnit\Framework\TestCase
+class InputStreamTest extends TestCase
 {
-    public function testInputStreamThrowsExceptionIfSourceUnreadable()
+    public function testInputStreamThrowsExceptionIfSourceUnreadable(): void
     {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("Could not read from input source 'This file definitely does not exist'.");
@@ -18,7 +19,7 @@ class InputStreamTest extends \PHPUnit\Framework\TestCase
         };
     }
 
-    public function testJsonParsedCorrectly()
+    public function testJsonParsedCorrectly(): void
     {
         $inputStream = new class extends InputStreamCollection
         {
@@ -33,7 +34,7 @@ class InputStreamTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testParameterStringParsedCorrectly()
+    public function testParameterStringParsedCorrectly(): void
     {
         $inputStream = new class extends InputStreamCollection
         {
@@ -48,7 +49,7 @@ class InputStreamTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testGetAndGetAllMethodsAllWork()
+    public function testGetAndGetAllMethodsAllWork(): void
     {
         $inputStream = new class extends InputStreamCollection
         {

@@ -9,10 +9,11 @@ use Parable\GetSet\DataCollection;
 use Parable\GetSet\PostCollection;
 use Parable\GetSet\ServerCollection;
 use Parable\GetSet\SessionCollection;
+use PHPUnit\Framework\TestCase;
 
-class SimpleCollectionsTest extends \PHPUnit\Framework\TestCase
+class SimpleCollectionsTest extends TestCase
 {
-    public function testCookieCollection()
+    public function testCookieCollection(): void
     {
         $_COOKIE['hello'] = 'yay';
 
@@ -29,7 +30,7 @@ class SimpleCollectionsTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testFilesCollection()
+    public function testFilesCollection(): void
     {
         $files = new FilesCollection();
 
@@ -43,7 +44,7 @@ class SimpleCollectionsTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testGetCollection()
+    public function testGetCollection(): void
     {
         $get = new GetCollection();
 
@@ -57,7 +58,7 @@ class SimpleCollectionsTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testInternalCollection()
+    public function testInternalCollection(): void
     {
         $internal = new DataCollection();
 
@@ -71,7 +72,7 @@ class SimpleCollectionsTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testPostCollection()
+    public function testPostCollection(): void
     {
         $post = new PostCollection();
 
@@ -85,7 +86,7 @@ class SimpleCollectionsTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testServerCollection()
+    public function testServerCollection(): void
     {
         $server = new ServerCollection();
 
@@ -97,7 +98,7 @@ class SimpleCollectionsTest extends \PHPUnit\Framework\TestCase
         self::assertArrayHasKey('test', $server->getAll());
     }
 
-    public function testSessionCollection()
+    public function testSessionCollection(): void
     {
         $session = new SessionCollection();
 

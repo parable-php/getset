@@ -7,6 +7,9 @@ use Parable\GetSet\Resource\LocalResourceInterface;
 
 abstract class BaseCollection
 {
+    /**
+     * @var array
+     */
     protected $localValues = [];
 
     public function getAll(): array
@@ -29,6 +32,7 @@ abstract class BaseCollection
     public function getAllAndClear(): array
     {
         $data = $this->getAll();
+
         $this->clear();
 
         return $data;
@@ -44,10 +48,22 @@ abstract class BaseCollection
             if (!isset($resource[$key])) {
                 return $default;
             }
+
             $resource = &$resource[$key];
         }
 
         return $resource;
+    }
+
+    public function getMultiple(string ...$keys): array
+    {
+        $values = [];
+
+        foreach ($keys as $key) {
+            $values[] = $this->get($key);
+        }
+
+        return $values;
     }
 
     public function getAndRemove(string $key, $default = null)
@@ -75,6 +91,7 @@ abstract class BaseCollection
             if (!isset($resource[$key]) || !is_array($resource[$key])) {
                 $resource[$key] = [];
             }
+
             $resource = &$resource[$key];
         }
 
@@ -120,6 +137,7 @@ abstract class BaseCollection
                     $key
                 ));
             }
+
             if ($index < (count($keys) - 1)) {
                 $resource = &$resource[$key];
             }
@@ -145,6 +163,7 @@ abstract class BaseCollection
             if (!isset($resource[$key])) {
                 return false;
             }
+
             $resource = &$resource[$key];
         }
 

@@ -1,5 +1,15 @@
 # Parable GetSet
 
+## 0.1.4
+
+_Changes_
+- Added `getMultiple(string ...$keys): array` so you can request multiple keys in one go. The default value if not found is always `null`.
+
+```php
+// Example of getMultiple:
+[$title, $content] = $postColection->getMultiple('title', 'content');
+```
+
 ## 0.1.3
 
 _Changes_

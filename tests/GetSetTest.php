@@ -7,8 +7,9 @@ use Parable\GetSet\ServerCollection;
 use Parable\GetSet\Exception;
 use Parable\GetSet\Resource\GlobalResourceInterface;
 use Parable\GetSet\Resource\LocalResourceInterface;
+use PHPUnit\Framework\TestCase;
 
-class GetSetTest extends \PHPUnit\Framework\TestCase
+class GetSetTest extends TestCase
 {
     /**
      * @var BaseCollection
@@ -23,7 +24,7 @@ class GetSetTest extends \PHPUnit\Framework\TestCase
         };
     }
 
-    public function testLocalResourceGetSet()
+    public function testLocalResourceGetSet(): void
     {
         $globalsBefore = $GLOBALS;
 
@@ -40,7 +41,7 @@ class GetSetTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testGlobalResourceGetSet()
+    public function testGlobalResourceGetSet(): void
     {
         $getSet = new class extends BaseCollection implements GlobalResourceInterface {
             public function getResource(): string
@@ -61,7 +62,7 @@ class GetSetTest extends \PHPUnit\Framework\TestCase
         self::assertSame('value', $GLOBALS['_TEST']['test']);
     }
 
-    public function testNoResourceInterfaceSetThrowsExceptionOnGetAll()
+    public function testNoResourceInterfaceSetThrowsExceptionOnGetAll(): void
     {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("No resource interface implemented.");
@@ -72,7 +73,7 @@ class GetSetTest extends \PHPUnit\Framework\TestCase
         $getSet->getAll();
     }
 
-    public function testNoResourceInterfaceSetThrowsExceptionOnSetAll()
+    public function testNoResourceInterfaceSetThrowsExceptionOnSetAll(): void
     {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("No resource interface implemented.");
@@ -83,7 +84,7 @@ class GetSetTest extends \PHPUnit\Framework\TestCase
         $getSet->setAll([]);
     }
 
-    public function testSetAllGetAll()
+    public function testSetAllGetAll(): void
     {
         $this->getSet->setAll([
             'key1' => 'yo1',
@@ -99,7 +100,40 @@ class GetSetTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testGetAllAndClear()
+    public function testGetMultiple(): void
+    {
+        $this->getSet->setAll([
+            'key1' => 'yo1',
+            'key2' => 'yo2',
+            'key3' => 'yo3',
+        ]);
+
+        self::assertSame(
+            [
+                'yo1',
+                'yo3',
+                null,
+            ],
+            $this->getSet->getMultiple('key1', 'key3', 'nope')
+        );
+    }
+
+    public function testGetMultipleCanBeListed(): void
+    {
+        $this->getSet->setAll([
+            'key1' => 'yo1',
+            'key2' => 'yo2',
+            'key3' => 'yo3',
+        ]);
+
+        [$key1, $key3, $shouldBeNull] = $this->getSet->getMultiple('key1', 'key3', 'nope');
+
+        self::assertSame('yo1', $key1);
+        self::assertSame('yo3', $key3);
+        self::assertNull($shouldBeNull);
+    }
+
+    public function testGetAllAndClear(): void
     {
         $this->getSet->setAll([
             'key1' => 'yo1',
@@ -117,7 +151,7 @@ class GetSetTest extends \PHPUnit\Framework\TestCase
         self::assertSame([], $this->getSet->getAll());
     }
 
-    public function testGetAndRemove()
+    public function testGetAndRemove(): void
     {
         $this->getSet->setAll([
             'key1' => 'yo1',
@@ -138,19 +172,20 @@ class GetSetTest extends \PHPUnit\Framework\TestCase
         self::assertSame(1, $this->getSet->count());
     }
 
-    public function testRemoveNonExistingKeyThrows()
+    public function testRemoveNonExistingKeyThrows(): void
     {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("Cannot remove non-existing value by key 'stuff'");
 
         $this->getSet->remove('stuff');
     }
-    public function testGetAndRemoveNonExistingKeyDoesNotThrow()
+
+    public function testGetAndRemoveNonExistingKeyDoesNotThrow(): void
     {
         self::assertNull($this->getSet->getAndRemove('stuff'));
     }
 
-    public function testSetGetSpecificAndGetAll()
+    public function testSetGetSpecificAndGetAll(): void
     {
         $this->getSet->set('key1', 'yo1');
         $this->getSet->set('key2', 'yo2');
@@ -168,7 +203,7 @@ class GetSetTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testSetAllVersusSetMany()
+    public function testSetAllVersusSetMany(): void
     {
         self::assertCount(0, $this->getSet->getAll());
 
@@ -219,7 +254,7 @@ class GetSetTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testGetSetAndRemoveWithHierarchalKeys()
+    public function testGetSetAndRemoveWithHierarchalKeys(): void
     {
         $this->getSet->set('one', ['this' => 'should stay']);
         $this->getSet->set('one.two.three.four', 'totally nested, yo');
@@ -284,7 +319,7 @@ class GetSetTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testRemoveHierarchalKey()
+    public function testRemoveHierarchalKey(): void
     {
         $this->getSet->set('one.two.three', 'totally');
         $this->getSet->set('one.two.four', 'also');
@@ -307,7 +342,7 @@ class GetSetTest extends \PHPUnit\Framework\TestCase
         self::assertTrue(is_array($this->getSet->get('one')));
     }
 
-    public function testCountWithKey()
+    public function testCountWithKey(): void
     {
         $this->getSet->set('one.two.three', 'totally');
         $this->getSet->set('one.two.four', 'also');
@@ -320,7 +355,7 @@ class GetSetTest extends \PHPUnit\Framework\TestCase
         self::assertSame(2, $this->getSet->count('one.two'));
     }
 
-    public function testHas()
+    public function testHas(): void
     {
         $this->getSet->set('one.two.three', 'totally');
 
@@ -332,27 +367,27 @@ class GetSetTest extends \PHPUnit\Framework\TestCase
         self::assertFalse($this->getSet->has('random'));
     }
 
-    public function testGetNonExistingKeyReturnsNullByDefault()
+    public function testGetNonExistingKeyReturnsNullByDefault(): void
     {
         self::assertNull($this->getSet->get('nope'));
     }
 
-    public function testGetNonExistingKeyReturnsDefaultIfPassed()
+    public function testGetNonExistingKeyReturnsDefaultIfPassed(): void
     {
         self::assertSame('default', $this->getSet->get('nope', 'default'));
     }
 
-    public function testGetAndRemoveNonExistingKeyReturnsNullByDefault()
+    public function testGetAndRemoveNonExistingKeyReturnsNullByDefault(): void
     {
         self::assertNull($this->getSet->getAndRemove('nope'));
     }
 
-    public function testGetAndRemoveNonExistingKeyReturnsDefaultIfPassed()
+    public function testGetAndRemoveNonExistingKeyReturnsDefaultIfPassed(): void
     {
         self::assertSame('default', $this->getSet->getAndRemove('nope', 'default'));
     }
 
-    public function testGlobalValuesAreSetGlobally()
+    public function testGlobalValuesAreSetGlobally(): void
     {
         $server = new ServerCollection();
 
