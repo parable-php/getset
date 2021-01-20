@@ -1,5 +1,10 @@
 # Parable GetSet
 
+## 0.2.0
+
+_Changes_
+- Dropped support for php7, php8 only from now on.
+
 ## 0.1.4
 
 _Changes_
