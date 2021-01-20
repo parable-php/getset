@@ -3,6 +3,7 @@
 namespace Parable\GetSet;
 
 use Parable\GetSet\Resource\LocalResourceInterface;
+use Throwable;
 
 class InputStreamCollection extends BaseCollection implements LocalResourceInterface
 {
@@ -26,9 +27,9 @@ class InputStreamCollection extends BaseCollection implements LocalResourceInter
 
     protected function extractAndSetData(string $data)
     {
-        $data_parsed = json_decode($data, true);
-
-        if (json_last_error() !== JSON_ERROR_NONE) {
+        try {
+            $data_parsed = json_decode($data, true, 512, JSON_THROW_ON_ERROR);
+        } catch (Throwable $t) {
             parse_str(trim($data), $data_parsed);
         }
 

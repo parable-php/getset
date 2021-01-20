@@ -1,6 +1,6 @@
 # Parable GetSet
 
-[![Build Status](https://travis-ci.org/parable-php/getset.svg?branch=master)](https://travis-ci.org/parable-php/getset)
+[![Build Status](https://travis-ci.com/parable-php/getset.svg?branch=master)](https://travis-ci.com/parable-php/getset)
 [![Latest Stable Version](https://poser.pugx.org/parable-php/getset/v/stable)](https://packagist.org/packages/parable-php/getset)
 [![Latest Unstable Version](https://poser.pugx.org/parable-php/getset/v/unstable)](https://packagist.org/packages/parable-php/getset)
 [![License](https://poser.pugx.org/parable-php/getset/license)](https://packagist.org/packages/parable-php/getset)
@@ -15,7 +15,7 @@ Collections always return the requested value or `null` by default, allowing the
 
 ## Install
 
-Php 7.1+ and [composer](https://getcomposer.org) are required.
+Php 8.0+ and [composer](https://getcomposer.org) are required.
 
 ```bash
 $ composer require parable-php/getset

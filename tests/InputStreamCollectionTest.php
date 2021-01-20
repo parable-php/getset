@@ -6,7 +6,7 @@ use Parable\GetSet\InputStreamCollection;
 use Parable\GetSet\Exception;
 use PHPUnit\Framework\TestCase;
 
-class InputStreamTest extends TestCase
+class InputStreamCollectionTest extends TestCase
 {
     public function testInputStreamThrowsExceptionIfSourceUnreadable(): void
     {

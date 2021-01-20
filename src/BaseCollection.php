@@ -7,10 +7,7 @@ use Parable\GetSet\Resource\LocalResourceInterface;
 
 abstract class BaseCollection
 {
-    /**
-     * @var array
-     */
-    protected $localValues = [];
+    protected array $localValues = [];
 
     public function getAll(): array
     {
@@ -44,12 +41,12 @@ abstract class BaseCollection
 
         $resource = $this->getAll();
 
-        foreach ($keys as $key) {
-            if (!isset($resource[$key])) {
+        foreach ($keys as $keyPart) {
+            if (!isset($resource[$keyPart])) {
                 return $default;
             }
 
-            $resource = &$resource[$key];
+            $resource = &$resource[$keyPart];
         }
 
         return $resource;
@@ -87,12 +84,12 @@ abstract class BaseCollection
 
         $resource = &$data;
 
-        foreach ($keys as $key) {
-            if (!isset($resource[$key]) || !is_array($resource[$key])) {
-                $resource[$key] = [];
+        foreach ($keys as $keyPart) {
+            if (!isset($resource[$keyPart]) || !is_array($resource[$keyPart])) {
+                $resource[$keyPart] = [];
             }
 
-            $resource = &$resource[$key];
+            $resource = &$resource[$keyPart];
         }
 
         $resource = $value;
@@ -130,8 +127,8 @@ abstract class BaseCollection
 
         $resource = &$data;
 
-        foreach ($keys as $index => $key) {
-            if (!isset($resource[$key])) {
+        foreach ($keys as $index => $keyPart) {
+            if (!isset($resource[$keyPart])) {
                 throw new Exception(sprintf(
                     "Cannot remove non-existing value by key '%s'",
                     $key
@@ -139,11 +136,11 @@ abstract class BaseCollection
             }
 
             if ($index < (count($keys) - 1)) {
-                $resource = &$resource[$key];
+                $resource = &$resource[$keyPart];
             }
         }
 
-        unset($resource[$key]);
+        unset($resource[$keyPart]);
 
         $this->setAll($data);
     }
@@ -159,12 +156,12 @@ abstract class BaseCollection
 
         $resource = $this->getAll();
 
-        foreach ($keys as $key) {
-            if (!isset($resource[$key])) {
+        foreach ($keys as $keyPart) {
+            if (!isset($resource[$keyPart])) {
                 return false;
             }
 
-            $resource = &$resource[$key];
+            $resource = &$resource[$keyPart];
         }
 
         return true;

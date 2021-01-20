@@ -11,12 +11,9 @@ use PHPUnit\Framework\TestCase;
 
 class GetSetTest extends TestCase
 {
-    /**
-     * @var BaseCollection
-     */
-    protected $getSet;
+    protected BaseCollection $getSet;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -329,17 +326,17 @@ class GetSetTest extends TestCase
 
         $this->getSet->remove('one.two.three');
 
-        self::assertSame(null, $this->getSet->get('one.two.three'));
+        self::assertNull($this->getSet->get('one.two.three'));
 
         self::assertCount(1, $this->getSet->get('one.two'));
-        self::assertTrue(is_array($this->getSet->get('one.two')));
+        self::assertIsArray($this->getSet->get('one.two'));
 
         $this->getSet->remove('one.two');
 
         self::assertNull($this->getSet->get('one.two'));
 
         // But one should be untouched and still an array
-        self::assertTrue(is_array($this->getSet->get('one')));
+        self::assertIsArray($this->getSet->get('one'));
     }
 
     public function testCountWithKey(): void
