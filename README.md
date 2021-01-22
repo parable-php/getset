@@ -1,6 +1,6 @@
 # Parable GetSet
 
-[![Build Status](https://travis-ci.com/parable-php/getset.svg?branch=master)](https://travis-ci.com/parable-php/getset)
+[![Workflow Status](https://github.com/parable-php/getset/workflows/Tests/badge.svg)](https://github.com/parable-php/getset/actions?query=workflow%3ATests)
 [![Latest Stable Version](https://poser.pugx.org/parable-php/getset/v/stable)](https://packagist.org/packages/parable-php/getset)
 [![Latest Unstable Version](https://poser.pugx.org/parable-php/getset/v/unstable)](https://packagist.org/packages/parable-php/getset)
 [![License](https://poser.pugx.org/parable-php/getset/license)](https://packagist.org/packages/parable-php/getset)
