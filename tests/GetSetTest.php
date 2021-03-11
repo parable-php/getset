@@ -4,7 +4,7 @@ namespace Parable\GetSet\Tests;
 
 use Parable\GetSet\BaseCollection;
 use Parable\GetSet\ServerCollection;
-use Parable\GetSet\Exception;
+use Parable\GetSet\GetSetException;
 use Parable\GetSet\Resource\GlobalResourceInterface;
 use Parable\GetSet\Resource\LocalResourceInterface;
 use PHPUnit\Framework\TestCase;
@@ -61,7 +61,7 @@ class GetSetTest extends TestCase
 
     public function testNoResourceInterfaceSetThrowsExceptionOnGetAll(): void
     {
-        $this->expectException(Exception::class);
+        $this->expectException(GetSetException::class);
         $this->expectExceptionMessage("No resource interface implemented.");
 
         $getSet = new class extends BaseCollection {
@@ -72,7 +72,7 @@ class GetSetTest extends TestCase
 
     public function testNoResourceInterfaceSetThrowsExceptionOnSetAll(): void
     {
-        $this->expectException(Exception::class);
+        $this->expectException(GetSetException::class);
         $this->expectExceptionMessage("No resource interface implemented.");
 
         $getSet = new class extends BaseCollection {
@@ -95,39 +95,6 @@ class GetSetTest extends TestCase
             ],
             $this->getSet->getAll()
         );
-    }
-
-    public function testGetMultiple(): void
-    {
-        $this->getSet->setAll([
-            'key1' => 'yo1',
-            'key2' => 'yo2',
-            'key3' => 'yo3',
-        ]);
-
-        self::assertSame(
-            [
-                'yo1',
-                'yo3',
-                null,
-            ],
-            $this->getSet->getMultiple('key1', 'key3', 'nope')
-        );
-    }
-
-    public function testGetMultipleCanBeListed(): void
-    {
-        $this->getSet->setAll([
-            'key1' => 'yo1',
-            'key2' => 'yo2',
-            'key3' => 'yo3',
-        ]);
-
-        [$key1, $key3, $shouldBeNull] = $this->getSet->getMultiple('key1', 'key3', 'nope');
-
-        self::assertSame('yo1', $key1);
-        self::assertSame('yo3', $key3);
-        self::assertNull($shouldBeNull);
     }
 
     public function testGetAllAndClear(): void
@@ -169,12 +136,16 @@ class GetSetTest extends TestCase
         self::assertSame(1, $this->getSet->count());
     }
 
-    public function testRemoveNonExistingKeyThrows(): void
+    public function testRemoveNonExistingKeyDoesNothing(): void
     {
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage("Cannot remove non-existing value by key 'stuff'");
+        $dataBefore = $this->getSet->getAll();
 
         $this->getSet->remove('stuff');
+
+        self::assertSame(
+            $dataBefore,
+            $this->getSet->getAll()
+        );
     }
 
     public function testGetAndRemoveNonExistingKeyDoesNotThrow(): void

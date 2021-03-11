@@ -3,14 +3,14 @@
 namespace Parable\GetSet\Tests;
 
 use Parable\GetSet\InputStreamCollection;
-use Parable\GetSet\Exception;
+use Parable\GetSet\GetSetException;
 use PHPUnit\Framework\TestCase;
 
 class InputStreamCollectionTest extends TestCase
 {
     public function testInputStreamThrowsExceptionIfSourceUnreadable(): void
     {
-        $this->expectException(Exception::class);
+        $this->expectException(GetSetException::class);
         $this->expectExceptionMessage("Could not read from input source 'This file definitely does not exist'.");
 
         new class extends InputStreamCollection

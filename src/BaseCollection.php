@@ -7,6 +7,7 @@ use Parable\GetSet\Resource\LocalResourceInterface;
 
 abstract class BaseCollection
 {
+    /** @var mixed[] */
     protected array $localValues = [];
 
     public function getAll(): array
@@ -23,7 +24,7 @@ abstract class BaseCollection
             return $GLOBALS[$this->getResource()];
         }
 
-        throw new Exception('No resource interface implemented.');
+        throw new GetSetException('No resource interface implemented.');
     }
 
     public function getAllAndClear(): array
@@ -50,17 +51,6 @@ abstract class BaseCollection
         }
 
         return $resource;
-    }
-
-    public function getMultiple(string ...$keys): array
-    {
-        $values = [];
-
-        foreach ($keys as $key) {
-            $values[] = $this->get($key);
-        }
-
-        return $values;
     }
 
     public function getAndRemove(string $key, $default = null)
@@ -116,7 +106,7 @@ abstract class BaseCollection
             return;
         }
 
-        throw new Exception('No resource interface implemented.');
+        throw new GetSetException('No resource interface implemented.');
     }
 
     public function remove(string $key): void
@@ -129,10 +119,7 @@ abstract class BaseCollection
 
         foreach ($keys as $index => $keyPart) {
             if (!isset($resource[$keyPart])) {
-                throw new Exception(sprintf(
-                    "Cannot remove non-existing value by key '%s'",
-                    $key
-                ));
+                return;
             }
 
             if ($index < (count($keys) - 1)) {

@@ -14,7 +14,7 @@ class InputStreamCollection extends BaseCollection implements LocalResourceInter
         $body_content = @file_get_contents(static::INPUT_SOURCE);
 
         if ($body_content === false) {
-            throw new Exception(sprintf(
+            throw new GetSetException(sprintf(
                 "Could not read from input source '%s'.",
                 static::INPUT_SOURCE
             ));

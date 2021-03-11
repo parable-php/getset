@@ -2,6 +2,6 @@
 
 namespace Parable\GetSet;
 
-class Exception extends \Exception
+class GetSetException extends \Exception
 {
 }

@@ -1,5 +1,13 @@
 # Parable GetSet
 
+## 0.3.0
+
+_Changes_
+- Add static analysis using psalm.
+- `Exception` has been renamed to `GetSetException` for clarity.
+- `getMultiple()` has been removed from all collections.
+- When removing a non-existing key, since the end result is reached, no exception will be thrown anymore.
+
 ## 0.2.0
 
 _Changes_
