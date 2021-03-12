@@ -1,5 +1,9 @@
 # Parable GetSet
 
+## 1.0.0
+
+Just a re-release locking the interface in place. First final release!
+
 ## 0.3.0
 
 _Changes_
@@ -20,7 +24,7 @@ _Changes_
 
 ```php
 // Example of getMultiple:
-[$title, $content] = $postColection->getMultiple('title', 'content');
+[$title, $content] = $postCollection->getMultiple('title', 'content');
 ```
 
 ## 0.1.3
