@@ -154,7 +154,7 @@ abstract class BaseCollection
         return true;
     }
 
-    public function count(string $key = null): int
+    public function count(?string $key = null): int
     {
         if ($key === null) {
             $data = $this->getAll();
